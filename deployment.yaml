@@ -1,0 +1,26 @@
+# This file configures the blizz-app which serves public web traffic returning the time
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: blizz-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blizz-app
+  template:
+    metadata:
+      labels:
+        app: blizz-app
+        version: 1.0.0
+    spec:
+      containers:
+      - name: blizz-app
+        # Replace $GCLOUD_PROJECT with your project ID
+        image: gcr.io/interviews-284804/blizz-app-80:latest
+        # This app listens on port 8080 for web traffic by default.
+        ports:
+        - containerPort: 5000
+        env:
+          - name: PORT
+            value: "5000"
